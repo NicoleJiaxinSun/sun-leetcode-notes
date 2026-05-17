@@ -17,6 +17,8 @@ int mid = (left + right) / 2;
 left = mid + 1;
 right = mid;
 ```
+- Left-biased `mid` may become equal to `left`,
+  so we must move `left` to `mid + 1`.
 
 
 ### Right-biased `mid`
@@ -26,7 +28,5 @@ int mid = (left + right + 1) / 2;
 left = mid;
 right = mid - 1;
 ```
-
-### Core Idea
-
-Never keep the same boundary when `mid` can be equal to that boundary.
+- Right-biased `mid` may become equal to `right`,
+  so we must move `right` to `mid - 1`.
