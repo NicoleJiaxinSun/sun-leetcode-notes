@@ -1,21 +1,19 @@
 # Binary Search
 
 ## Core Idea
+
 Binary search is not just to "find a number".
 The core idea is shrinking the search space.
 ---
 
 ## Two Main Templates
 
-### Exact Search
+### Exact Target Search
 
 ```java
 while(left <= right)
 ```
-
-Use when:
 - searching exact target
-- checking if target exists
 
 Key:
 - must exclude mid
@@ -32,17 +30,13 @@ mid has already been checked.
 ```java
 while(left < right)
 ```
-
-Use when:
-- finding minimum
-- finding peak
-- finding first/last position
-- finding boundary
+-  minimum/peak
+-  first/last position
+-  boundary
 
 Key:
 - sometimes keep mid
 
-Usually:
 
 ```java
 right = mid;
@@ -72,7 +66,6 @@ The hardest part is:
 
 ## Mental Model
 
-Ask:
 
 ```text
 Which side is definitely impossible?
@@ -84,36 +77,63 @@ Remove only the impossible side.
 
 ## Infinite Loop Warning
 
-This causes infinite loop:
+When using the `while (left < right)` binary search pattern, the search range must shrink every loop, otherwise an infinite loop may happen.
+
+### Left-biased `mid`
+
+```java
+int mid = (left + right) / 2;
+```
+
+This `mid` is `left`biased.
+
+So we should use:
+
+```java
+left = mid + 1;
+right = mid;
+```
+
+and NOT:
 
 ```java
 left = mid;
 ```
+Because `mid` may equal `left`.
 
-when using:
 
-```java
-while(left < right)
-```
-
-because mid may equal left.
-
-Fix:
+### Right-biased `mid`
 
 ```java
-left = mid + 1;
+int mid = (left + right + 1) / 2;
 ```
+
+This `mid` is `right`biased.
+
+So we should use:
+
+```java
+left = mid;
+right = mid - 1;
+```
+
+and NOT:
+
+```java
+right = mid;
+```
+
+Because `mid` may equal `right`.
+
+
+### Core Idea
+
+Never keep the same boundary when `mid` can be equal to that boundary.
+
 
 ---
 
 ## My Learning Notes
 
-I used to mix:
-- exact search
-- boundary search
-
-Now I understand they are different problems with different templates.
-
-Boundary search usually keeps candidates alive.
-
-Exact search removes checked candidates immediately.
+Boundary search usually keeps candidates.
+Exact search removes checked candidates.
